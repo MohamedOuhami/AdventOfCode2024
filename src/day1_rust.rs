@@ -39,12 +39,36 @@ pub fn calculate_distance() {
     loc1.sort();
     loc2.sort();
 
-    println!("The first item in loc1 is {}", loc1[1]);
-    println!("The first item in loc1 is {}", loc2[1]);
     for i in 0..loc1.len() {
         let difference = loc1[i] - loc2[i];
         distance += difference.abs();
     }
 
     println!("{}", distance);
+}
+
+// Calculate the similarity
+
+fn calculate_similarity(value: i32, loc_ids: Vec<i32>) -> i32 {
+    let mut occurences = 0;
+
+    for element in loc_ids {
+        if element == value {
+            occurences += 1;
+        }
+    }
+
+    value * occurences
+}
+
+pub fn test_similarity() {
+    let (loc1, loc2) = read_data_from_file();
+
+    let mut total_occ = 0;
+    for element in loc1 {
+        let sim = calculate_similarity(element, loc2.clone());
+        total_occ += sim;
+    }
+
+    println!("{}", total_occ);
 }
